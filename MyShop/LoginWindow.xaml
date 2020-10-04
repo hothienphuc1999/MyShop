@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MyShop"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         Title="LoginWindow" Height="500" Width="450">
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom">
@@ -34,7 +35,8 @@
             </Canvas>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                         Margin="0 10">
-                <Button Padding="5 5" Width="100">
+                <Button Padding="5 5" Width="100" 
+                        Background="Transparent" Foreground="Blue" FontSize="16">
                     Login
                 </Button>
             </StackPanel>
