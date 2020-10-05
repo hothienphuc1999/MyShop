@@ -1,0 +1,70 @@
+﻿<Window x:Class="MyShop.View.SettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyShop.View"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Name="settingWindow"
+        Title="SettingWindow" Height="300" Width="300">
+    <DockPanel>
+        <StackPanel Margin="10 0">
+            <TextBlock FontSize="24"
+                       HorizontalAlignment="Center"
+                       Margin="0 20">
+                Setting
+            </TextBlock>
+            <Canvas Height="30" Width="250" Margin="0 10"
+                    HorizontalAlignment="Center">
+                <Label Name="servernameLable" Content="_Server name" Height="30" FontStyle="Italic"
+                           Foreground="Gray" Target="{Binding ElementName=servernameTextBox}"/>
+                <TextBox Name="servernameTextBox" Height="30" Width="250"
+                         Background="Transparent" Padding="5 5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="GotFocus">
+                            <i:InvokeCommandAction Command="{Binding ServernameTextBoxGotFocus }"
+                                                   CommandParameter="{Binding ElementName=settingWindow}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="LostFocus">
+                            <i:InvokeCommandAction Command="{Binding ServernameTextBoxLostFocus}"
+                                                   CommandParameter="{Binding ElementName=settingWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+            </Canvas>
+            <Canvas Height="30" Width="250" Margin="0 10"
+                    HorizontalAlignment="Center">
+                <Label Name="dbnameLable" Content="_Database name" Height="30" FontStyle="Italic"
+                           Foreground="Gray" Target="{Binding ElementName=dbnameTextBox}"/>
+                <TextBox Name="dbnameTextBox" Height="30" Width="250"
+                         Background="Transparent" Padding="5 5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="GotFocus">
+                            <i:InvokeCommandAction Command="{Binding DBNameTextBoxGotFocus}"
+                                                   CommandParameter="{Binding ElementName=settingWindow}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="LostFocus">
+                            <i:InvokeCommandAction Command="{Binding DBNameTextBoxLostFocus}"
+                                                   CommandParameter="{Binding ElementName=settingWindow}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+            </Canvas>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0 10">
+                <Button Margin="10 0" Width="50"
+                        Background="Transparent"
+                        Foreground="Green">
+                    Save
+                </Button>
+                <Button Margin="10 0" Width="50"
+                        Background="Transparent"
+                        Foreground="Red">
+                    Cancel
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>
