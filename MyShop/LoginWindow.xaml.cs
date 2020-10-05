@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using MyShop.ViewModel;
+using System.Configuration;
+
 namespace MyShop
 {
     /// <summary>

@@ -6,11 +6,16 @@ namespace MyShop.ViewModel
 {
     public class SettingWindowViewModel : BaseViewModel
     {
+        string server = "";
+        string db = "";
         #region command
         public ICommand ServernameTextBoxGotFocus { get; set; }
         public ICommand DBNameTextBoxGotFocus { get; set; }
         public ICommand ServernameTextBoxLostFocus { get; set; }
         public ICommand DBNameTextBoxLostFocus { get; set; }
+        public ICommand SaveButtonClick { get; set; }
+        public ICommand CancelButtonClick { get; set; }
+        public ICommand LoadCommand { get; set; }
         #endregion
         public SettingWindowViewModel()
         {
@@ -46,6 +51,32 @@ namespace MyShop.ViewModel
                         {
                             p.dbnameLable.Visibility = Visibility.Visible;
                         }
+                    }
+                );
+            SaveButtonClick = new RelayCommand<SettingWindow>
+                (
+                    (p) => { return p == null ? false : true; },
+                    (p) =>
+                    {
+                        MessageBox.Show("CLosed");
+                        p.DialogResult = true;
+                    }
+                );
+            CancelButtonClick = new RelayCommand<SettingWindow>
+                (
+                    (p) => { return p == null ? false : true; },
+                    (p) =>
+                    {
+                        p.Close();
+                    }
+                );
+            LoadCommand = new RelayCommand<SettingWindow>
+                (
+                    (p) => { return p == null ? false : true; },
+                    (p) =>
+                    {
+                        p.servernameTextBox.Text = server;
+                        p.dbnameTextBox.Text = db;
                     }
                 );
         }

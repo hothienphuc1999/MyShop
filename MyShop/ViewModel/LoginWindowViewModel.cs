@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using System.Windows;
+using System.Configuration;
 using MyShop.View;
 
 namespace MyShop.ViewModel
@@ -16,6 +17,8 @@ namespace MyShop.ViewModel
         #endregion
         public LoginWindowViewModel()
         {
+            var server = ConfigurationManager.AppSettings["server"];
+            var db = ConfigurationManager.AppSettings["database"];
             UsernameTextBoxGotFocus = new RelayCommand<LoginWindow>
                 (
                     (p) => { return p == null ? false : true; },

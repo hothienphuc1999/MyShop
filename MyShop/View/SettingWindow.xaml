@@ -7,7 +7,13 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Name="settingWindow"
-        Title="SettingWindow" Height="300" Width="300">
+        Title="SettingWindow" Height="400" Width="350">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand }"
+                                                   CommandParameter="{Binding ElementName=settingWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <DockPanel>
         <StackPanel Margin="10 0">
             <TextBlock FontSize="24"
@@ -18,7 +24,8 @@
             <Canvas Height="30" Width="250" Margin="0 10"
                     HorizontalAlignment="Center">
                 <Label Name="servernameLable" Content="_Server name" Height="30" FontStyle="Italic"
-                           Foreground="Gray" Target="{Binding ElementName=servernameTextBox}"/>
+                           Foreground="Gray" Target="{Binding ElementName=servernameTextBox}"
+                      HorizontalAlignment="Right" Canvas.Right="0"/>
                 <TextBox Name="servernameTextBox" Height="30" Width="250"
                          Background="Transparent" Padding="5 5">
                     <i:Interaction.Triggers>
@@ -36,7 +43,7 @@
             <Canvas Height="30" Width="250" Margin="0 10"
                     HorizontalAlignment="Center">
                 <Label Name="dbnameLable" Content="_Database name" Height="30" FontStyle="Italic"
-                           Foreground="Gray" Target="{Binding ElementName=dbnameTextBox}"/>
+                           Foreground="Gray" Target="{Binding ElementName=dbnameTextBox}" Canvas.Right="0"/>
                 <TextBox Name="dbnameTextBox" Height="30" Width="250"
                          Background="Transparent" Padding="5 5">
                     <i:Interaction.Triggers>
@@ -53,15 +60,21 @@
             </Canvas>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        Margin="0 10">
-                <Button Margin="10 0" Width="50"
+                        Margin="0 10" >
+                <Button Margin="10 0" Width="100"
                         Background="Transparent"
-                        Foreground="Green">
+                        Foreground="Green" FontSize="16"
+                        IsDefault="True"
+                        Command="{Binding SaveButtonClick}"
+                        CommandParameter="{Binding ElementName=settingWindow}">
                     Save
                 </Button>
-                <Button Margin="10 0" Width="50"
+                <Button Margin="10 0" Width="100"
                         Background="Transparent"
-                        Foreground="Red">
+                        Foreground="Red" FontSize="16"
+                        IsCancel="True"
+                        Command="{Binding CancelButtonClick}"
+                        CommandParameter="{Binding ElementName=settingWindow}">
                     Cancel
                 </Button>
             </StackPanel>
