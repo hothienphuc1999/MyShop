@@ -15,6 +15,11 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <DockPanel>
+        <TextBlock Name="versionTextBlock" DockPanel.Dock="Bottom"
+                   FontSize="14" TextAlignment="Center"
+                   Margin="0 5"
+                   >
+        </TextBlock>
         <StackPanel Margin="10 0">
             <TextBlock FontSize="24"
                        HorizontalAlignment="Center"

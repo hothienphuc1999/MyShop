@@ -15,10 +15,12 @@ namespace MyShop.ViewModel
         public ICommand LoginButtonClick { get; set; }
         public ICommand SettingButtonClick { get; set; }
         #endregion
+        public string Server = ConfigurationManager.AppSettings["server"];
+        public string DB = ConfigurationManager.AppSettings["database"];
+
         public LoginWindowViewModel()
         {
-            var server = ConfigurationManager.AppSettings["server"];
-            var db = ConfigurationManager.AppSettings["database"];
+            
             UsernameTextBoxGotFocus = new RelayCommand<LoginWindow>
                 (
                     (p) => { return p == null ? false : true; },
@@ -65,7 +67,10 @@ namespace MyShop.ViewModel
                     (p) => { return p == null ? false : true; },
                     (p) => {
                         Window window = new SettingWindow();
-                        window.Show();
+                        if (window.ShowDialog() == true)
+                        {
+
+                        }
                     }
                 );
         }
