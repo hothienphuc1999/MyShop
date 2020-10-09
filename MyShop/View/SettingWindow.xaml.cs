@@ -11,17 +11,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MyShop.ViewModel;
 
-namespace MyShop
+namespace MyShop.View
 {
     /// <summary>
-    /// Interaction logic for SaleDashboard.xaml
+    /// Interaction logic for SettingWindow.xaml
     /// </summary>
-    public partial class SaleDashboard : Window
+    public partial class SettingWindow : Window
     {
-        public SaleDashboard()
+        public SettingWindowViewModel ViewModel { get; set; }
+        public SettingWindow(string server, string dB)
         {
             InitializeComponent();
+            this.DataContext = ViewModel = new SettingWindowViewModel(server, dB);
         }
     }
 }
