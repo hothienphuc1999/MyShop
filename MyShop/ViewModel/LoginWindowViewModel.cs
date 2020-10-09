@@ -15,8 +15,8 @@ namespace MyShop.ViewModel
         public ICommand LoginButtonClick { get; set; }
         public ICommand SettingButtonClick { get; set; }
         #endregion
-        public string Server = ConfigurationManager.AppSettings["server"];
-        public string DB = ConfigurationManager.AppSettings["database"];
+        public static string Server = ConfigurationManager.AppSettings["server"];
+        public static string DB = ConfigurationManager.AppSettings["database"];
 
         public LoginWindowViewModel()
         {
@@ -59,14 +59,17 @@ namespace MyShop.ViewModel
                 (
                     (p) => { return p == null ? false : true; },
                     (p) => {
-                        MessageBox.Show("Successfully!!!");
+                        var screen = new AdminDashboardWindow();
+                        if (screen.ShowDialog()==true)
+                        {
+                        }
                     }
                 );
             SettingButtonClick = new RelayCommand<LoginWindow>
                 (
                     (p) => { return p == null ? false : true; },
                     (p) => {
-                        Window window = new SettingWindow();
+                        Window window = new SettingWindow(Server,DB);
                         if (window.ShowDialog() == true)
                         {
 

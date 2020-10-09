@@ -21,10 +21,10 @@ namespace MyShop.View
     public partial class SettingWindow : Window
     {
         public SettingWindowViewModel ViewModel { get; set; }
-        public SettingWindow()
+        public SettingWindow(string server, string dB)
         {
             InitializeComponent();
-            this.DataContext = ViewModel = new SettingWindowViewModel();
+            this.DataContext = ViewModel = new SettingWindowViewModel(server, dB);
         }
     }
 }

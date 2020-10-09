@@ -1,15 +1,13 @@
 ﻿using System.Windows.Input;
 using System.Windows;
 using MyShop.View;
-using MyShop.ViewModel;
 using System.Reflection;
+using System.Configuration;
 
 namespace MyShop.ViewModel
 {
     public class SettingWindowViewModel : BaseViewModel
     {
-        //string server = "";
-        //string db = "";
         #region command
         public ICommand ServernameTextBoxGotFocus { get; set; }
         public ICommand DBNameTextBoxGotFocus { get; set; }
@@ -20,7 +18,7 @@ namespace MyShop.ViewModel
         public ICommand LoadCommand { get; set; }
         #endregion
         
-        public SettingWindowViewModel()
+        public SettingWindowViewModel(string server, string db)
         {
             ServernameTextBoxGotFocus = new RelayCommand<SettingWindow>
                 (
@@ -61,7 +59,15 @@ namespace MyShop.ViewModel
                     (p) => { return p == null ? false : true; },
                     (p) =>
                     {
-                        MessageBox.Show("CLosed");
+                        LoginWindowViewModel.Server = p.servernameTextBox.Text;
+                        LoginWindowViewModel.DB = p.dbnameTextBox.Text;
+
+                        var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                        config.AppSettings.Settings["server"].Value = p.servernameTextBox.Text;
+                        config.AppSettings.Settings["database"].Value = p.dbnameTextBox.Text;
+                        config.Save(ConfigurationSaveMode.Minimal);
+
+                        MessageBox.Show("Setting saved!","Notification",MessageBoxButton.OK);
                         p.DialogResult = true;
                     }
                 );
@@ -78,6 +84,8 @@ namespace MyShop.ViewModel
                 (p) => { return p == null ? false : true; },
                 (p) =>
                 {
+                    p.servernameTextBox.Text = server;
+                    p.dbnameTextBox.Text = db;
                     string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                     p.versionTextBlock.Text = $"Version {version}";
                 }
