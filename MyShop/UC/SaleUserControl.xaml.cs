@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyShop.UserControl
+namespace MyShop.UC
 {
     /// <summary>
-    /// Interaction logic for MasterDataUserControl.xaml
+    /// Interaction logic for SaleUserControl.xaml
     /// </summary>
-    public partial class MasterDataUserControl : UserControl
+    public partial class SaleUserControl : UserControl
     {
-        public MasterDataUserControl()
+        public SaleUserControl()
         {
             InitializeComponent();
         }

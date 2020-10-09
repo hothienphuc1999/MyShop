@@ -76,13 +76,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UserControl\MasterDataUserControl.xaml.cs">
+    <Compile Include="UC\MasterDataUserControl.xaml.cs">
       <DependentUpon>MasterDataUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\ReportUserControl.xaml.cs">
+    <Compile Include="UC\ReportUserControl.xaml.cs">
       <DependentUpon>ReportUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\SaleUserControl.xaml.cs">
+    <Compile Include="UC\SaleUserControl.xaml.cs">
       <DependentUpon>SaleUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AdminDashboardViewModel.cs" />
@@ -107,15 +107,15 @@
       <DependentUpon>LoginWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserControl\MasterDataUserControl.xaml">
+    <Page Include="UC\MasterDataUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\ReportUserControl.xaml">
+    <Page Include="UC\ReportUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\SaleUserControl.xaml">
+    <Page Include="UC\SaleUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

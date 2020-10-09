@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyShop.UserControl
+namespace MyShop.UC
 {
     /// <summary>
-    /// Interaction logic for SaleUserControl.xaml
+    /// Interaction logic for MasterDataUserControl.xaml
     /// </summary>
-    public partial class SaleUserControl : UserControl
+    public partial class MasterDataUserControl : UserControl
     {
-        public SaleUserControl()
+        public MasterDataUserControl()
         {
             InitializeComponent();
         }

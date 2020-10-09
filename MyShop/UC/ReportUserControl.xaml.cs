@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyShop.UserControl
+namespace MyShop.UC
 {
     /// <summary>
     /// Interaction logic for ReportUserControl.xaml
