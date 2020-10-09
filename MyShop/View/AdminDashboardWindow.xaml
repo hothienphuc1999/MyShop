@@ -55,9 +55,6 @@
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
         <TabControl Name="tabs">
-            <TabItem Header="Master data"></TabItem>
-            <TabItem Header="Sale"></TabItem>
-            <TabItem Header="Transaction"></TabItem>
         </TabControl>
     </DockPanel>
 </Fluent:RibbonWindow>
