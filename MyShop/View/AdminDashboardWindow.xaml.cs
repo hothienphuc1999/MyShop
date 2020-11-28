@@ -15,15 +15,7 @@ namespace MyShop.View
         public AdminDashboardWindow()
         {
             InitializeComponent();
-            // this.DataContext = ViewModel = new AdminDashboardViewModel();
-            var screens = new ObservableCollection<TabItem>()
-             {
-                new TabItem() { Content = new MasterDataUserControl()},
-                new TabItem() { Content = new SaleUserControl()},
-                new TabItem() { Content = new ReportUserControl()}
-            };
-            tabs.ItemsSource = screens;
-
+            this.DataContext = ViewModel = new AdminDashboardViewModel();
         }
     }
 }

@@ -60,9 +60,8 @@ namespace MyShop.ViewModel
                     (p) => { return p == null ? false : true; },
                     (p) => {
                         var screen = new AdminDashboardWindow();
-                        if (screen.ShowDialog()==true)
-                        {
-                        }
+                        //p.Hide();
+                        screen.ShowDialog();
                     }
                 );
             SettingButtonClick = new RelayCommand<LoginWindow>
@@ -76,6 +75,8 @@ namespace MyShop.ViewModel
                         }
                     }
                 );
+
         }
+        
     }
 }

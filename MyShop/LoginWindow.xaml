@@ -18,7 +18,7 @@
                        FontSize="14" >
                 Wellcome to MyShop!!!
             </TextBlock>
-            <Image DockPanel.Dock="Right"
+            <Image DockPanel.Dock="Right" RenderOptions.BitmapScalingMode="HighQuality"
                     Width="30" Height="30"
                     Margin="5 0" Source="/Img/setting_icon_2.png">
                 <i:Interaction.Triggers>
@@ -41,7 +41,8 @@
                 <Label Name="usernameLable" Content="_Username" Height="30" FontStyle="Italic"
                            Foreground="Gray" Target="{Binding ElementName=usernameTextBox}"/>
                 <TextBox Name="usernameTextBox" Height="30" Width="250"
-                         Background="Transparent" Padding="5 5">
+                         Background="Transparent" Padding="5 5"
+                         >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="GotFocus">
                             <i:InvokeCommandAction Command="{Binding UsernameTextBoxGotFocus}"

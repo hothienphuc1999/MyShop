@@ -9,9 +9,9 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Name="adminDashboard"
-        Title="AdminDashboard" Height="450" Width="800">
+        Title="AdminDashboard" Height="600" Width="800">
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="">
+        <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding AdminDashboardLoaded}"
                                    CommandParameter="{Binding ElementName=adminDashboard}"/>
         </i:EventTrigger>
@@ -25,31 +25,65 @@
                             <Label Content="MSSV - Họ và tên"/>
                         </Fluent:BackstageTabItem>
                         <Fluent:BackstageTabItem Header="Options" >
-
                         </Fluent:BackstageTabItem>
                         <Fluent:BackstageTabItem Header="Exit" >
-
                         </Fluent:BackstageTabItem>
                     </Fluent:BackstageTabControl>
                 </Fluent:Backstage>
             </Fluent:Ribbon.Menu>
             <Fluent:RibbonTabItem Header="Master data">
                 <Fluent:RibbonGroupBox Header="Import">
-                    <Fluent:Button Header="Excel">
+                    <Fluent:Button Header="Excel" Command="{Binding ImportExcelCommand}"
+                                    CommandParameter="{Binding ElementName=adminDashboard}">
                         <Fluent:Button.LargeIcon >
-                            <Image RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                   Source="/Img/Excel.png"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button Header="Acess">
+                        <Fluent:Button.LargeIcon >
+                            <Image Source="/Img/access.png"
+                                RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="Category">
-                    <Fluent:Button Header="Add">
+                    <Fluent:Button Header="Add" Name="AddCategoryButton"
+                                   Command="{Binding AddCategoryCommand}"
+                                    CommandParameter="{Binding ElementName=adminDashboard}">
                         <Fluent:Button.LargeIcon>
-                            <Image RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                   Source="/Img/add2.png"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button Header="Delete" >
+                    <Fluent:Button Header="Delete" Command="{Binding DeleteCategoryCommand}"
+                                    CommandParameter="{Binding ElementName=adminDashboard}">
                         <Fluent:Button.LargeIcon>
-                            <Image RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                   Source="/Img/delete.png"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Product">
+                    <Fluent:Button Header="Add" Command="{Binding AddProductCommand}"
+                                    CommandParameter="{Binding ElementName=adminDashboard}">
+                        <Fluent:Button.LargeIcon>
+                            <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                   Source="/Img/plus.png"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button Header="Update" Command="{Binding UpdateProductCommand}"
+                                    CommandParameter="{Binding ElementName=adminDashboard}">
+                        <Fluent:Button.LargeIcon>
+                            <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                   Source="/Img/edit2.png"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button Header="Delete" Command="{Binding DeleteProductCommand}"
+                                    CommandParameter="{Binding ElementName=adminDashboard}">
+                        <Fluent:Button.LargeIcon>
+                            <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                   Source="/Img/delete2.png"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
@@ -62,6 +96,10 @@
             <Fluent:RibbonTabItem Header="Report">
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
+        <Fluent:StatusBar DockPanel.Dock="Bottom" Name="statusBarWindow">
+            <Fluent:StatusBarItem Name="statusBar" Title="Notification Bar"
+                                  Margin="5 0 0 0" HorizontalAlignment="Left" />
+        </Fluent:StatusBar>
         <TabControl Name="tabs" BorderThickness="0"
                     SelectedIndex="{Binding ElementName=ribbon, Path=SelectedTabIndex}">
             <TabControl.Resources>

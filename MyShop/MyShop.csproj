@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -14,6 +15,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,8 +38,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\..\..\..\Downloads\UDQL2.DTTX.2020.Milestone01.Resources\Aspose.Cells.dll</HintPath>
+    </Reference>
+    <Reference Include="Aspose.Words">
+      <HintPath>..\..\..\..\Downloads\UDQL2.DTTX.2020.Milestone01.Resources\Aspose.Words.dll</HintPath>
+    </Reference>
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.4.3.0\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Fluent, Version=8.0.0.0, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
       <HintPath>..\packages\Fluent.Ribbon.8.0.0\lib\net452\Fluent.dll</HintPath>
@@ -48,8 +63,12 @@
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -76,9 +95,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Category.cs">
+      <DependentUpon>MyShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Image.cs">
+      <DependentUpon>MyShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MyShopModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyShopModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MyShopModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MyShopModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyShopModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="UC\ByteArrayToImageConverter.cs" />
+    <Compile Include="Model\Product.cs">
+      <DependentUpon>MyShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UC\MasterData\EditCategoryWindow.xaml.cs">
+      <DependentUpon>EditCategoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\MasterData\FilterSettingWIndow.xaml.cs">
+      <DependentUpon>FilterSettingWIndow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC\MasterDataUserControl.xaml.cs">
       <DependentUpon>MasterDataUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC\MasterData\PagingInfo.cs" />
+    <Compile Include="UC\MasterData\PagingRow.cs" />
     <Compile Include="UC\ReportUserControl.xaml.cs">
       <DependentUpon>ReportUserControl.xaml</DependentUpon>
     </Compile>
@@ -107,9 +159,17 @@
       <DependentUpon>LoginWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UC\MasterDataUserControl.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="UC\MasterData\EditCategoryWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UC\MasterData\FilterSettingWIndow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UC\MasterDataUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UC\ReportUserControl.xaml">
       <SubType>Designer</SubType>
@@ -146,6 +206,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Model\MyShopModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MyShopModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\MyShopModel.edmx.diagram">
+      <DependentUpon>MyShopModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -155,11 +222,43 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Img\setting_icon_2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\add2.png" />
+    <Resource Include="Img\box.png" />
+    <Resource Include="Img\delete.png" />
+    <Resource Include="Img\delete2.png" />
+    <Resource Include="Img\edit2.png" />
+    <Resource Include="Img\Excel.png" />
+    <Resource Include="Img\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\search.png" />
+    <Resource Include="Img\access.png" />
+    <Content Include="Model\MyShopModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyShopModel.edmx</DependentUpon>
+      <LastGenOutput>MyShopModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\MyShopModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyShopModel.edmx</DependentUpon>
+      <LastGenOutput>MyShopModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

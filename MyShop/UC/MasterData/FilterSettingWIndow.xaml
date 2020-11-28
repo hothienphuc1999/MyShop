@@ -1,0 +1,36 @@
+﻿<Window x:Class="MyShop.UC.MasterData.FilterSettingWIndow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyShop.UC.MasterData"
+        mc:Ignorable="d"
+        Title="Filter Setting" Height="200" Width="400">
+    <DockPanel Margin="10">
+        <StackPanel DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="_Product Per Page"></Label>
+                <ComboBox Width="50" Height="20" 
+                          Name="ProductQuantity"
+                          SelectedIndex="0"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10">
+                <CheckBox VerticalAlignment="Center" Name="priceCheck"></CheckBox>
+                <Label Content="Price Range" ></Label>
+                <Slider Name="PriceSlider" Width="100" Margin="10 0"
+                        Minimum="0" Maximum="50000000" IsSnapToTickEnabled="True" 
+                        Ticks="0, 10000000,20000000,30000000,40000000,50000000" TickPlacement="BottomRight"></Slider>
+                <TextBox Width="100" Height="20" Margin="5 0"
+                         Text="{Binding ElementName=PriceSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                         ></TextBox>
+                <Label Content="VND" ></Label>
+            </StackPanel>
+
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Name="SaveButton" Width="70" Margin="10" IsDefault="True" Click="SaveButton_Click">Save</Button>
+            <Button Name="CancelButton" Width="70" Margin="10" IsCancel="False" Click="CancelButton_Click">Cancel</Button>
+        </StackPanel>
+        <StackPanel></StackPanel>
+    </DockPanel>
+</Window>

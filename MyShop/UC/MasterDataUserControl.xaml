@@ -4,11 +4,159 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MyShop.UC"
-             mc:Ignorable="d"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:ByteArrayToImageConverter x:Key="coverter"></local:ByteArrayToImageConverter>
+    </UserControl.Resources>
     <DockPanel>
-        <TextBlock>
-            MasterData
-        </TextBlock>
+        <StackPanel DockPanel.Dock="Right" Width="350"
+                    Background="AntiqueWhite" Name="ProductInfoPannel">
+            <Label FontSize="16" FontWeight="Bold" 
+                   Margin="5" Content="Products Infomation"/>
+            <Image Width="100" Name="ProductImage" DataContext="{Binding ElementName=productsListView, Path=SelectedItem}">
+                <Image.Source>
+                    <Binding Path="Image" Mode="OneTime" Converter="{StaticResource coverter}">
+                        <Binding.TargetNullValue>
+                            <ImageSource>/Img/box.png</ImageSource>
+                        </Binding.TargetNullValue>
+                    </Binding>
+                </Image.Source>
+                <Image.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="ProductInfoEdit" Header="Change Picture" Click="ProductInfoEdit_Click"></MenuItem>
+                    </ContextMenu>
+                </Image.ContextMenu>
+            </Image>
+            <Image Width="100" Name="ProductImageTemp" Visibility="Hidden">
+                <Image.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="ProductInfoTempEdit" Header="Undo" Click="ProductInfoTempEdit_Click"></MenuItem>
+                    </ContextMenu>
+                </Image.ContextMenu>
+            </Image>
+            <Canvas Name="idProductCanvas" Height="30" Width="250" Margin="0 5"
+                    HorizontalAlignment="Center">
+                <Label Name="idSPLabel" Content="_Product ID" Height="30" FontStyle="Italic"
+                           Foreground="Gray"/>
+                <TextBox Name="idSPTextBox" Height="30" Width="250" IsEnabled="False"
+                         Background="Transparent" Padding="5 5" TextChanged="IdSPTextBox_TextChanged"
+                         DataContext="{Binding ElementName=productsListView, Path=SelectedItem}" Text="{Binding ID, Mode=OneWay}">
+                </TextBox>
+            </Canvas>
+            <Canvas Height="30" Width="250" Margin="0 5"
+                    HorizontalAlignment="Center">
+                <Label Name="tenSPLabel" Content="_Product Name" Height="30" FontStyle="Italic"
+                           Foreground="Gray"/>
+                <TextBox Name="tenSPTextBox" Height="30" Width="250"
+                         Background="Transparent" Padding="5 5" GotFocus="TenSPTextBox_GotFocus" LostFocus="TenSPTextBox_LostFocus" TextChanged="TenSPTextBox_TextChanged"
+                         DataContext="{Binding ElementName=productsListView, Path=SelectedItem}" Text="{Binding Name, Mode=OneWay}">
+                </TextBox>
+            </Canvas>
+            <Canvas Height="30" Width="250" Margin="0 5"
+                    HorizontalAlignment="Center">
+                <Label Name="giaSPLabel" Content="_Price" Height="30" FontStyle="Italic"
+                           Foreground="Gray"/>
+                <TextBox Name="giaSPTextbox" Height="30" Width="250"
+                         Background="Transparent" Padding="5 5" GotFocus="GiaSPTextbox_GotFocus" LostFocus="GiaSPTextbox_LostFocus" TextChanged="GiaSPTextbox_TextChanged"
+                         DataContext="{Binding ElementName=productsListView, Path=SelectedItem}" Text="{Binding Price, Mode=OneWay}">
+                </TextBox>
+            </Canvas>
+            <Canvas Height="30" Width="250" Margin="0 5"
+                    HorizontalAlignment="Center">
+                <Label Name="slLabel" Content="_Quantity" Height="30" FontStyle="Italic"
+                           Foreground="Gray"/>
+                <TextBox Name="slTextbox" Height="30" Width="250" LostFocus="SlTextbox_LostFocus_1" GotFocus="SlTextbox_GotFocus_1" TextChanged="SlTextbox_TextChanged"
+                         Background="Transparent" Padding="5 5" 
+                         DataContext="{Binding ElementName=productsListView, Path=SelectedItem}" Text="{Binding Quantity, Mode=OneWay}"
+                         >
+                </TextBox>
+            </Canvas>
+            <Canvas Height="30" Width="250" Margin="0 5"
+                    HorizontalAlignment="Center">
+                <Label Name="skuLabel" Content="_SKU" Height="30" FontStyle="Italic"
+                           Foreground="Gray"/>
+                <TextBox Name="skuTextBox" Height="30" Width="250"
+                         Background="Transparent" Padding="5 5" GotFocus="SkuTextBox_GotFocus" LostFocus="SkuTextBox_LostFocus" TextChanged="SkuTextBox_TextChanged"
+                         DataContext="{Binding ElementName=productsListView, Path=SelectedItem}" Text="{Binding SKU, Mode=OneWay}">
+                </TextBox>
+            </Canvas>
+            <Canvas MinHeight="30" Width="250" Margin="0 5"
+                    HorizontalAlignment="Center">
+                <Label Name="desLabel" Content="_Description" Height="30" FontStyle="Italic"
+                           Foreground="Gray"/>
+                <TextBox Name="desTextbox" Height="Auto" Width="250" GotFocus="DesTextbox_GotFocus" LostFocus="DesTextbox_LostFocus" TextChanged="DesTextbox_TextChanged"
+                         Background="Transparent" Padding="5 5" TextWrapping="Wrap" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         DataContext="{Binding ElementName=productsListView, Path=SelectedItem}" Text="{Binding Description, Mode=OneWay}">
+                </TextBox>
+            </Canvas>
+        </StackPanel>
+        <DockPanel Background="White">
+            <DockPanel DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal" Margin="5 10">
+                    <Label Content="Categories"/>
+                    <ComboBox Name="categoriesComboBox" Width="150" SelectionChanged="CategoriesComboBox_SelectionChanged"
+                              ItemsSource="{Binding Cate, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Mode=OneWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Width="40" Margin="5 0" ToolTip="Filter Setting"
+                            Name="FilterSetting" Click="FilterSetting_Click">
+                    </Button>
+                </StackPanel>
+                <Grid>
+                    <TextBox Margin="5 10" Padding="25 3 0 0" Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged">
+                    </TextBox>
+                    <Image HorizontalAlignment="Left" Margin="12,16,0,16" Height="15" 
+                           RenderOptions.BitmapScalingMode="HighQuality" Source="/Img/search.png" ></Image>
+                </Grid>
+            </DockPanel>
+            <StackPanel DockPanel.Dock="Bottom" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button Width="70" Height="25" Margin="7" Name="PreviousButton" Click="PreviousButton_Click">
+                    Previous
+                </Button>
+                <ComboBox Width="100" Height="25" Margin="7" Name="PageComboBox" SelectionChanged="PageComboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="Page "/>
+                                <TextBlock Text="{Binding Page}"></TextBlock>
+                                <TextBlock Text=" of "></TextBlock>
+                                <TextBlock Text="{Binding TotalPages}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Width="70" Height="25" Margin="7" Name="NextButton" Click="NextButton_Click">
+                    Next
+                </Button>
+            </StackPanel>
+            <ListView MouseDown="ProductsListView_MouseDown" Name="productsListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      SelectionChanged="ProductsListView_SelectionChanged">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Width="150" Margin="5" Background="White">
+                            <TextBlock Text="{Binding Name, Mode=OneTime}" Foreground="Red"></TextBlock>
+                            <Image Source="{Binding Image, TargetNullValue = Img/box.png , Mode=OneTime, Converter={StaticResource coverter}}" Height="100"></Image>
+                            <TextBlock Text="{Binding Price, Mode=OneTime}" Foreground="Green" ></TextBlock>
+                            <Button BorderThickness="0" FontSize="14">Buy Now</Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </DockPanel>
     </DockPanel>
 </UserControl>
