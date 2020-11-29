@@ -2,6 +2,9 @@
 using System.Windows;
 using System.Configuration;
 using MyShop.View;
+using MyShop.Model;
+using System.Linq;
+using System.Windows.Controls;
 
 namespace MyShop.ViewModel
 {
@@ -58,10 +61,28 @@ namespace MyShop.ViewModel
             LoginButtonClick = new RelayCommand<LoginWindow>
                 (
                     (p) => { return p == null ? false : true; },
-                    (p) => {
-                        var screen = new AdminDashboardWindow();
-                        //p.Hide();
-                        screen.ShowDialog();
+                    (p) =>  {
+                        var username = p.usernameTextBox.Text;
+                        var password = p.passwordPasswordBox.Password.ToString();
+                        if (username != "" && password != "")
+                        {
+                            var db = new MyShopEntities();
+                            var user = db.Users.Where(s => s.Username == username && s.Password == password).SingleOrDefault();
+                            if (user != null)
+                            {
+                                var screen = new AdminDashboardWindow();
+                                p.Close();
+                                screen.ShowDialog();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Username or password incorrect");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Username or password is empty!");
+                        }
                     }
                 );
             SettingButtonClick = new RelayCommand<LoginWindow>

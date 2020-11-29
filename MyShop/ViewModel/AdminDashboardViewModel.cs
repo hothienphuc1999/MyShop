@@ -34,6 +34,7 @@ namespace MyShop.ViewModel
         public ICommand AddProductCommand { get; set; }
         public ICommand UpdateProductCommand { get; set; }
         public ICommand DeleteProductCommand { get; set; }
+        public ICommand ExitWindow { get; set; }
         #endregion
         public AdminDashboardViewModel()
         {
@@ -176,6 +177,14 @@ namespace MyShop.ViewModel
                     userControl.HandleParentEvent(
                     MasterDataUserControl.MasterDataAction.DeleteSelectedProduct
                     );
+                }
+                );
+            ExitWindow = new RelayCommand<AdminDashboardWindow>
+                (
+                (p) => { return p == null ? false : true; },
+                (p) =>
+                {
+                    p.Close();
                 }
                 );
 

@@ -20,15 +20,34 @@ using System.Reflection;
 using MyShop.Model;
 using MyShop.UC.MasterData;
 using Image = MyShop.Model.Image;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MyShop.UC
 {
     /// <summary>
     /// Interaction logic for MasterDataUC.xaml
     /// </summary>
-    public partial class MasterDataUserControl : UserControl
+    public partial class MasterDataUserControl : UserControl, INotifyPropertyChanged
     {
-        public List<Category> Categories { get; set; }
+        private ObservableCollection<Category> categories = new ObservableCollection<Category>();
+        public ObservableCollection<Category> Categories
+        {
+            get
+            {
+                return categories;
+            }
+            set
+            {
+                categories = value;
+                OnPropertyChanged();
+            }
+        }
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
 
         public enum MasterDataAction
         {
@@ -249,12 +268,14 @@ namespace MyShop.UC
         private int _numberOfPage = 2;
         private int _curentPage = 1;
         private int _priceRange = 0;
-        
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public MasterDataUserControl()
         {
             InitializeComponent();
-            MyShopEntities db = new MyShopEntities();
-            Categories = db.Categories.ToList();
+            categoriesComboBox.ItemsSource = categories;
+            CategoryProductCombobox.ItemsSource = categories;
         }
 
         private void TenSPTextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -299,7 +320,6 @@ namespace MyShop.UC
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LoadCategory();
-
             Category selectedCategory = categoriesComboBox.SelectedItem as Category;
             Paging(selectedCategory);
             PageComboBox.SelectedIndex = 0;
@@ -309,9 +329,11 @@ namespace MyShop.UC
         public void LoadCategory()
         {
             MyShopEntities db = new MyShopEntities();
-            // Categories = db.Categories.ToList();
-            var cat = db.Categories.ToList();
-            categoriesComboBox.ItemsSource = cat;
+            var oc = new ObservableCollection<Category>(db.Categories);
+            foreach (var cat in oc)
+            {
+                categories.Add(cat);
+            }
             categoriesComboBox.SelectedIndex = 0;
         }
         private void CategoriesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -319,6 +341,7 @@ namespace MyShop.UC
             var selectedCategory = categoriesComboBox.SelectedItem as Category;
             Paging(selectedCategory);
             UpdateData(selectedCategory);
+            CategoryProductCombobox.SelectedIndex = -1;
         }
         /// <summary>
         /// Load data to ListView
@@ -326,50 +349,56 @@ namespace MyShop.UC
         /// <param name="category">Selected Category</param>
         private void UpdateData(Category category)
         {
-            MyShopEntities db = new MyShopEntities();
-            var products = db.Products;
-            var images = db.Images;
-            var query = (from product in products
-                             //from image in product.Images
-                         join image in images on product.ID equals image.ProductID into im
-                         from i in im.DefaultIfEmpty()
-                         where (product.CatID == category.ID) && product.Name.Contains(SearchTextBox.Text)
-                         && (_priceRange != 0 ? (product.Price > _priceRange - 5000000 && product.Price < _priceRange + 5000000) : product.Price > 0)
-                         orderby product.ID
-                         select new
-                         {
-                             ID = product.ID,
-                             Name = product.Name,
-                             Image = i.Data,
-                             Price = product.Price,
-                             Quantity = product.Quantity,
-                             SKU = product.SKU,
-                             Description = product.Description
-                         }).Skip((_curentPage - 1) * _numberOfPage).Take(_numberOfPage);
-            
-            productsListView.ItemsSource = query.ToList();
+            if (category!=null)
+            {
+                MyShopEntities db = new MyShopEntities();
+                var products = db.Products;
+                var images = db.Images;
+                var query = (from product in products
+                                 //from image in product.Images
+                             join image in images on product.ID equals image.ProductID into im
+                             from i in im.DefaultIfEmpty()
+                             where (product.CatID == category.ID) && product.Name.Contains(SearchTextBox.Text)
+                             && (_priceRange != 0 ? (product.Price > _priceRange - 5000000 && product.Price < _priceRange + 5000000) : product.Price > 0)
+                             orderby product.ID
+                             select new
+                             {
+                                 ID = product.ID,
+                                 Name = product.Name,
+                                 Image = i.Data,
+                                 Price = product.Price,
+                                 Quantity = product.Quantity,
+                                 SKU = product.SKU,
+                                 Description = product.Description,
+                                 Cat = product.Category.ID
+                             }).Skip((_curentPage - 1) * _numberOfPage).Take(_numberOfPage);
+
+                productsListView.ItemsSource = query.ToList();
+            }
         }
         private void Paging(Category category)
         {
-            MyShopEntities db = new MyShopEntities();
-            var cat = db.Categories;
-            var products = cat.Find(category.ID).Products;
-            var productsCount = (from product in products
-                                 where product.Name.Contains(SearchTextBox.Text.ToUpper())
-                                 && (_priceRange != 0 ? (product.Price > _priceRange - 5000000 && product.Price < _priceRange + 5000000) : product.Price > 0)
-                                 orderby product.ID
-                                 select product).Count();
-            int totalPage = productsCount / _numberOfPage;
-
-            if (productsCount % _numberOfPage != 0)
+            if (category != null)
             {
-                totalPage++;
+                MyShopEntities db = new MyShopEntities();
+                var cat = db.Categories;
+                var products = cat.Find(category.ID).Products;
+                var productsCount = (from product in products
+                                     where product.Name.Contains(SearchTextBox.Text.ToUpper())
+                                     && (_priceRange != 0 ? (product.Price > _priceRange - 5000000 && product.Price < _priceRange + 5000000) : product.Price > 0)
+                                     orderby product.ID
+                                     select product).Count();
+                int totalPage = productsCount / _numberOfPage;
+
+                if (productsCount % _numberOfPage != 0)
+                {
+                    totalPage++;
+                }
+                _curentPage = 1;
+                var pagingInfo = new PagingInfo(totalPage);
+                PageComboBox.ItemsSource = pagingInfo.Items.ToList();
+                PageComboBox.SelectedIndex = 0;
             }
-            _curentPage = 1;
-            var pagingInfo = new PagingInfo(totalPage);
-            PageComboBox.ItemsSource = pagingInfo.Items.ToList();
-            PageComboBox.SelectedIndex = 0;
-            
         }
 
         private void PageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -511,12 +540,22 @@ namespace MyShop.UC
             if (r.VisualHit.GetType() != typeof(ListBoxItem))
             {
                 productsListView.UnselectAll();
+                CategoryProductCombobox.SelectedIndex = -1;
             }
         }
         private void addNewCategory()
         {
             var screen = new EditCategoryWindow();
             screen.ShowDialog();
+            var db = new MyShopEntities();
+            int countCat = db.Categories.Count();
+            if (categories.Count() != countCat)
+            {
+                var newCat = db.Categories.ToList();
+                var lastItem = newCat.Last();
+                categoriesComboBox.SelectedIndex = 0;
+                categories.Add(lastItem);
+            }
         }
         private void DeleteCategory()
         {
@@ -536,6 +575,8 @@ namespace MyShop.UC
                 return;
             }
             MessageBox.Show($"Category \"{selected.Name}\" is deleted!", "Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
+            categoriesComboBox.SelectedIndex = 0;
+            categories.Remove(selected);
         }
 
         private void IdSPTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -581,10 +622,28 @@ namespace MyShop.UC
         {
             UndoImageProductInfomation();
         }
-
+        private int FindIndexCategory(int ID)
+        {
+            var selected = categories.Where(p => p.ID == ID).FirstOrDefault() as Category;
+            if (selected != null)
+            {
+                return categories.IndexOf(selected);
+            }
+            else
+            {
+                return -1;
+            }
+        }
         private void ProductsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UndoImageProductInfomation();
+            if (productsListView.SelectedItem != null)
+            {
+                int selected = (int)productsListView.SelectedItem.GetType().GetProperty("Cat")
+                    .GetValue(productsListView.SelectedItem, null);
+
+                CategoryProductCombobox.SelectedIndex = FindIndexCategory(selected);
+            }
         }
 
         private void FilterSetting_Click(object sender, RoutedEventArgs e)

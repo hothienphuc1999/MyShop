@@ -18,8 +18,8 @@
             </TextBox>
         </Canvas>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Margin="5" Width="70" Height="30" Content="Save" Click="Button_Click" ></Button>
-            <Button Margin="5" Width="70" Height="30" Content="Cancel" Click="Button_Click_1"></Button>
+            <Button Margin="5" Width="70" Height="30" Content="Save" Click="Button_Click" IsDefault="True" Style="{StaticResource defaultButton}" ></Button>
+            <Button Margin="5" Width="70" Height="30" Content="Cancel" Click="Button_Click_1" IsCancel="True" Style="{StaticResource cancelButton}"></Button>
         </StackPanel>
     </Grid>
 </Window>

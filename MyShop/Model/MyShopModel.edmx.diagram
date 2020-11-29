@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="MyShopModel.Product" Width="1.5" PointX="4.5" PointY="4.875" />
         <AssociationConnector Association="MyShopModel.FK_Product_Category" />
         <AssociationConnector Association="MyShopModel.FK_Image_Product" />
+        <EntityTypeShape EntityType="MyShopModel.User" Width="1.5" PointX="0.75" PointY="3.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

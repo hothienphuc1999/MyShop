@@ -11,8 +11,10 @@
         <local:ByteArrayToImageConverter x:Key="coverter"></local:ByteArrayToImageConverter>
     </UserControl.Resources>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Right" Width="350"
-                    Background="AntiqueWhite" Name="ProductInfoPannel">
+        <StackPanel DockPanel.Dock="Right" Width="350" 
+                    
+                    Background="AntiqueWhite" 
+                    Name="ProductInfoPannel">
             <Label FontSize="16" FontWeight="Bold" 
                    Margin="5" Content="Products Infomation"/>
             <Image Width="100" Name="ProductImage" DataContext="{Binding ElementName=productsListView, Path=SelectedItem}">
@@ -54,6 +56,15 @@
                          DataContext="{Binding ElementName=productsListView, Path=SelectedItem}" Text="{Binding Name, Mode=OneWay}">
                 </TextBox>
             </Canvas>
+            <ComboBox Name="CategoryProductCombobox" Height="30" Width="250" Margin="0 5">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name, StringFormat=Category: {0}}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <Canvas Height="30" Width="250" Margin="0 5"
                     HorizontalAlignment="Center">
                 <Label Name="giaSPLabel" Content="_Price" Height="30" FontStyle="Italic"
@@ -97,7 +108,7 @@
                 <StackPanel Orientation="Horizontal" Margin="5 10">
                     <Label Content="Categories"/>
                     <ComboBox Name="categoriesComboBox" Width="150" SelectionChanged="CategoriesComboBox_SelectionChanged"
-                              ItemsSource="{Binding Cate, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Mode=OneWay}">
+                             >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -107,7 +118,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <Button Width="40" Margin="5 0" ToolTip="Filter Setting"
-                            Name="FilterSetting" Click="FilterSetting_Click">
+                            Name="FilterSetting" Click="FilterSetting_Click"
+                             >
+                        <Image Source="/Img/filter.png" RenderOptions.BitmapScalingMode="HighQuality" 
+                               Height="15" Margin="2"/>
                     </Button>
                 </StackPanel>
                 <Grid>
@@ -120,8 +134,8 @@
             <StackPanel DockPanel.Dock="Bottom" 
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
-                <Button Width="70" Height="25" Margin="7" Name="PreviousButton" Click="PreviousButton_Click">
-                    Previous
+                <Button Width="70" Height="25" Margin="7" Name="PreviousButton" 
+                        Click="PreviousButton_Click" Content="Previous">
                 </Button>
                 <ComboBox Width="100" Height="25" Margin="7" Name="PageComboBox" SelectionChanged="PageComboBox_SelectionChanged">
                     <ComboBox.ItemTemplate>
@@ -135,7 +149,8 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Button Width="70" Height="25" Margin="7" Name="NextButton" Click="NextButton_Click">
+                <Button Width="70" Height="25" Margin="7" Name="NextButton" 
+                        Click="NextButton_Click">
                     Next
                 </Button>
             </StackPanel>
@@ -151,8 +166,9 @@
                         <StackPanel Width="150" Margin="5" Background="White">
                             <TextBlock Text="{Binding Name, Mode=OneTime}" Foreground="Red"></TextBlock>
                             <Image Source="{Binding Image, TargetNullValue = Img/box.png , Mode=OneTime, Converter={StaticResource coverter}}" Height="100"></Image>
-                            <TextBlock Text="{Binding Price, Mode=OneTime}" Foreground="Green" ></TextBlock>
-                            <Button BorderThickness="0" FontSize="14">Buy Now</Button>
+                            <TextBlock Text="{Binding Price, StringFormat=Price: {0} VND, Mode=OneTime}" 
+                                       Foreground="Green" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                            <Button FontSize="14" Content="Buy Now"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

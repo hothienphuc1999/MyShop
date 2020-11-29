@@ -26,7 +26,13 @@
                         </Fluent:BackstageTabItem>
                         <Fluent:BackstageTabItem Header="Options" >
                         </Fluent:BackstageTabItem>
-                        <Fluent:BackstageTabItem Header="Exit" >
+                        <Fluent:BackstageTabItem Header="Exit">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding ExitWindow}"
+                                   CommandParameter="{Binding ElementName=adminDashboard}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Fluent:BackstageTabItem>
                     </Fluent:BackstageTabControl>
                 </Fluent:Backstage>

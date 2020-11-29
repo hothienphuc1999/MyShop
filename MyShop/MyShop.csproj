@@ -116,6 +116,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyShopModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\User.cs">
+      <DependentUpon>MyShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="UC\ByteArrayToImageConverter.cs" />
     <Compile Include="Model\Product.cs">
       <DependentUpon>MyShopModel.tt</DependentUpon>
@@ -238,6 +241,7 @@
   <ItemGroup>
     <Resource Include="Img\search.png" />
     <Resource Include="Img\access.png" />
+    <Resource Include="Img\filter.png" />
     <Content Include="Model\MyShopModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MyShopModel.edmx</DependentUpon>

@@ -28,8 +28,8 @@
 
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="SaveButton" Width="70" Margin="10" IsDefault="True" Click="SaveButton_Click">Save</Button>
-            <Button Name="CancelButton" Width="70" Margin="10" IsCancel="False" Click="CancelButton_Click">Cancel</Button>
+            <Button Height="30" Name="SaveButton" Width="70" Margin="10" IsDefault="True" Click="SaveButton_Click" Style="{StaticResource defaultButton}">Save</Button>
+            <Button Height="30" Name="CancelButton" Width="70" Margin="10" IsCancel="True" Click="CancelButton_Click" Style="{StaticResource cancelButton}">Cancel</Button>
         </StackPanel>
         <StackPanel></StackPanel>
     </DockPanel>
