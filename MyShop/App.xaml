@@ -144,9 +144,11 @@
                 <ControlTemplate.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Panel.Background" TargetName="ButtonBorder" Value="WhiteSmoke"/>
+                        <Setter Property="Border.BorderBrush" TargetName="Border" Value="{StaticResource primary-brush}"/>
                     </Trigger>
                     <Trigger Property="IsChecked" Value="True">
                         <Setter Property="Shape.Fill" TargetName="Arrow" Value="#FF8D979E"/>
+                        <Setter Property="Border.BorderBrush" TargetName="Border" Value="{StaticResource success-brush}"/>
                     </Trigger>
                     <Trigger Property="IsEnabled" Value="False">
                         <Setter Property="Shape.Fill" TargetName="Arrow" Value="#999"/>
@@ -206,7 +208,7 @@
                                     <Setter Property="FrameworkElement.MinHeight" TargetName="DropDownBorder" Value="95"/>
                                 </Trigger>
                                 <Trigger Property="UIElement.IsEnabled" Value="False">
-                                    <Setter Property="TextElement.Foreground" Value="{StaticResource primary-brush}"/>
+                                    <Setter Property="TextElement.Foreground" Value="{StaticResource scondary-brush}"/>
                                 </Trigger>
                                 <Trigger Property="ItemsControl.IsGrouping" Value="True">
                                     <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
@@ -215,6 +217,43 @@
                                     <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
                                     <Setter Property="UIElement.Visibility" TargetName="PART_EditableTextBox" Value="Visible"/>
                                     <Setter Property="UIElement.Visibility" TargetName="ContentSite" Value="Hidden"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="ListViewItem">
+                <Setter Property="Foreground" Value="{StaticResource scondary-brush}"/>
+                <Setter Property="Background" Value="{StaticResource light-brush}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <Border Name="BorderItemListView"
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    CornerRadius="3" Height="{TemplateBinding Height}"
+                                    Background="{TemplateBinding Background}"
+                                    Width="{TemplateBinding Width}"
+                                    Margin="5">
+                                <ContentPresenter />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" Value="{StaticResource light-brush}"></Setter>
+                                    <Setter Property="Background" Value="White"></Setter>
+                                    <Setter TargetName="BorderItemListView" Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect
+                                                BlurRadius="10"
+                                                Color="#FF484545" 
+                                                Opacity="0.4" 
+                                                Direction="0" ShadowDepth="0" 
+                                                RenderingBias="Quality"/>
+                                        </Setter.Value>
+                                    </Setter>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

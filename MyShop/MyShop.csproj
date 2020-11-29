@@ -231,7 +231,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Img\add2.png" />
-    <Resource Include="Img\box.png" />
+    <Resource Include="Img\box_product.png" />
     <Resource Include="Img\delete.png" />
     <Resource Include="Img\delete2.png" />
     <Resource Include="Img\edit2.png" />
@@ -242,6 +242,7 @@
     <Resource Include="Img\search.png" />
     <Resource Include="Img\access.png" />
     <Resource Include="Img\filter.png" />
+    <Resource Include="Img\box.png" />
     <Content Include="Model\MyShopModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MyShopModel.edmx</DependentUpon>

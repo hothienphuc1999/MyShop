@@ -341,7 +341,10 @@ namespace MyShop.UC
             var selectedCategory = categoriesComboBox.SelectedItem as Category;
             Paging(selectedCategory);
             UpdateData(selectedCategory);
-            CategoryProductCombobox.SelectedIndex = -1;
+            if (categoriesComboBox.SelectedIndex >= 0)
+            {
+                CategoryProductCombobox.SelectedIndex = FindIndexCategory((categoriesComboBox.SelectedItem as Category).ID);
+            }
         }
         /// <summary>
         /// Load data to ListView
@@ -374,6 +377,7 @@ namespace MyShop.UC
                              }).Skip((_curentPage - 1) * _numberOfPage).Take(_numberOfPage);
 
                 productsListView.ItemsSource = query.ToList();
+                CategoryProductCombobox.SelectedIndex = FindIndexCategory(category.ID);
             }
         }
         private void Paging(Category category)
@@ -540,7 +544,8 @@ namespace MyShop.UC
             if (r.VisualHit.GetType() != typeof(ListBoxItem))
             {
                 productsListView.UnselectAll();
-                CategoryProductCombobox.SelectedIndex = -1;
+                CategoryProductCombobox.SelectedIndex = FindIndexCategory((categoriesComboBox
+                    .SelectedItem as Category).ID);
             }
         }
         private void addNewCategory()

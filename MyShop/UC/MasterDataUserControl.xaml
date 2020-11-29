@@ -13,7 +13,7 @@
     <DockPanel>
         <StackPanel DockPanel.Dock="Right" Width="350" 
                     
-                    Background="AntiqueWhite" 
+                    Background="{StaticResource light-brush}" 
                     Name="ProductInfoPannel">
             <Label FontSize="16" FontWeight="Bold" 
                    Margin="5" Content="Products Infomation"/>
@@ -103,7 +103,7 @@
                 </TextBox>
             </Canvas>
         </StackPanel>
-        <DockPanel Background="White">
+        <DockPanel Background="{StaticResource light-brush}">
             <DockPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal" Margin="5 10">
                     <Label Content="Categories"/>
@@ -154,7 +154,8 @@
                     Next
                 </Button>
             </StackPanel>
-            <ListView MouseDown="ProductsListView_MouseDown" Name="productsListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            <ListView MouseDown="ProductsListView_MouseDown" Name="productsListView" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       SelectionChanged="ProductsListView_SelectionChanged">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -163,7 +164,7 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="150" Margin="5" Background="White">
+                        <StackPanel Width="150" Margin="5" Background="Transparent">
                             <TextBlock Text="{Binding Name, Mode=OneTime}" Foreground="Red"></TextBlock>
                             <Image Source="{Binding Image, TargetNullValue = Img/box.png , Mode=OneTime, Converter={StaticResource coverter}}" Height="100"></Image>
                             <TextBlock Text="{Binding Price, StringFormat=Price: {0} VND, Mode=OneTime}" 
